@@ -1,0 +1,9 @@
+#page_templates = ["base.html", "index.html", "page.html", "post.html"]
+page_templates = ["base", "index", "page", "post", "signature"]
+public_dir = "public"
+source_dir = "source"
+static_dir = "static"
+page_dir = "page"
+template_dir = "template"
+theme = "default"
+

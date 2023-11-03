@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<section>
+  {{body | safe}}
+  <ul>
+    {% for post_url in post_index %}
+    <li>
+      <a href="post/{{post_url.url_name}}">{{post_url.title}}</a>
+    </li>
+    {% else %}
+    No Posts or failed to load
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

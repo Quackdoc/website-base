@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<header>
+  <p align="center"><small><span>{{property.datetime}} | <a>{{property.category}}</a> | {% for tag in property.tags
+        %}<a>{{tag}}</a> {% else %}{% else %}No tags or failed to load{% endfor %}</span></small></p>
+</header>
+<section>
+  {{body | safe}}
+</section>
+{% endblock %}
