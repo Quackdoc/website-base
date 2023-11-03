@@ -30,9 +30,7 @@ This is not unlike Linux with DEs like xfce or sway. However compared to those B
 
 this may not be the fastest machine you have ever used, but on 2gb, it certainly is impressive
 
-<!---iframe width=600 height=362 src="https://files.catbox.moe/4n17z3.mp4" allow="autoplay; picture-in-picture" allowfullscreen></iframe-->
-
-<iframe width=1000 height=603 src="https://files.catbox.moe/4n17z3.mp4" allow="autoplay; picture-in-picture" allowfullscreen></iframe>
+<iframe id="myiframe" src="https://files.catbox.moe/4n17z3.mp4" frameBorder="0" allow="autoplay; picture-in-picture" allowfullscreen></iframe>
 
 Thanks to android applications being catered to a much lower preforming class of hardware, this means that using an android browser, albeit possibly clunky on mouse and keyboard, can be a much better experience then using Linux or Windows on these low and usually very old devices. 
 
