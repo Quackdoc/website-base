@@ -6,6 +6,7 @@
     --lighter: #0c1217;
     --dark: #a3c6f7;
     --accent: #d9e1e8;
+    --visited: #5178e4;
   }
   }
   /* Dark theme */
@@ -16,7 +17,7 @@
       --light: #9baec8;
       --lighter: #d9e1e8;
       --dark: #1f232b;
-      --accent: #282c37;
+      --accent: #5178e4;
     }
   }
   
@@ -45,16 +46,17 @@
     margin-top: 0;
     color: var(--lighter);
   }
+
   /* font was .86*/
   body #post code, body#collection code, body#post code, body#subpage code {
     background-color: var(--light);
     border: 1px solid var(--light);
     color: var(--dark);
-    padding: .2em .4em;
-    /*font-size: .40em;*/
+    padding: .1em .2em;
+    font-size: .20em;
     -webkit-border-radius: .25em;
     -moz-border-radius: .25em;
-    border-radius: .25em;
+    border-radius: .025em;
   
   }
   
@@ -74,7 +76,8 @@
   }
   
   .hljs, body#post article, pre {
-  font-size: 1.2em;
+  font-size: 0.9em;
+  padding: 0.6em;
   }
   
   /* ----------END CUSTOM------ */
@@ -210,29 +213,3 @@
   h6 {
     font-size: 0.96rem;
   }
-
-  /*
-  #myiframe {
-    height: 100vw;
-    width: 100vw;
-    border: 0;
-  }
-  */
-  /**/
-  .aspect-ratio {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 56.25%;
-  }
-    /**/
-
-  /* */
-  .aspect-ratio iframe {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-  }
-  /**/

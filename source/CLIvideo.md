@@ -1,8 +1,8 @@
 ---
 title = "Easy video tips for CLI chads"
-datetime = 2023-11-03T01:03:37Z
-tags = ["Default"]
-category = "post"
+datetime = 2023-11-02T01:03:37Z
+tags = ["Linux", "Video", "CLI"]
+category = "Tidbits"
 url_name = "videocli"
 ---
 # Easy video tips for CLI chads
@@ -12,7 +12,7 @@ When it comes to encoding videos, FFmpeg is a ubiquitous tool, it's supported on
 for decoding videos and watching them MPV is easily king here, with a great deal of flexibility and customization, you can do a LOT to tune your viewing experience perfectly.
 
 One of the downsides to using FFmpeg and other CLI tools is how many options they can sometimes have and scripting these options can sometimes be a complicated mess. This post will cover a few tips and tricks to make it just a little bit easier. 
-<!--more-->
+
 
 ## Flexible scripting.
 

@@ -1,16 +1,14 @@
 ---
 title = "Bliss OS and why you may actually care about it."
 datetime = 2023-11-03T01:03:37Z
-tags = ["Linux"]
-category = "post"
+tags = ["Linux", "Android", "Operating Systems"]
+category = "Tech Showcase"
 url_name = "Bliss"
 ---
 
 # Bliss OS and why you may actually care about it.
 
 Why on earth would someone want to install android on their PC? It's a question I get asked a lot lately. To be fair, it's not hard to understand why it would be asked, it's not as if people have a lot of exposure to android outside of the small spy device they lug around daily. There are actually a good few reasons to use android apps, and hopefully this will be able to showcase some of the benefits of ax86's continued development efforts. 
-
-<!--more-->
 
 ## Tablet and "Touch Primary" devices.
 
@@ -30,7 +28,9 @@ This is not unlike Linux with DEs like xfce or sway. However compared to those B
 
 this may not be the fastest machine you have ever used, but on 2gb, it certainly is impressive
 
-<iframe id="myiframe" src="https://files.catbox.moe/4n17z3.mp4" frameBorder="0" allow="autoplay; picture-in-picture" allowfullscreen></iframe>
+<video src="https://files.catbox.moe/4n17z3.mp4" controls></video>
+<!--iframe src="https://files.catbox.moe/4n17z3.mp4" frameBorder="0" allow="autoplay; picture-in-picture" allowfullscreen></iframe-->
+
 
 Thanks to android applications being catered to a much lower preforming class of hardware, this means that using an android browser, albeit possibly clunky on mouse and keyboard, can be a much better experience then using Linux or Windows on these low and usually very old devices. 
 
