@@ -116,7 +116,6 @@ nmcli con modify wireguard-swiss  ipv4.dns-priority 9999
 nmcli con modify wireguard-swiss ipv4.route-metric 9999
 nmcli con modify wireguard-swiss  ipv6.dns-priority 9999
 nmcli con modify wireguard-swiss ipv6.route-metric 9999
-nmcli con modify wireguard-swiss connection.autoconnect-priority -2 # not sure if this is needed?
 nmcli con modify wireguard-swiss connection.autoconnect yes
 ```
 
