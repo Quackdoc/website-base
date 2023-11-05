@@ -186,30 +186,36 @@
   
   h1 {
     font-size: 2rem;
-    margin-top: 0em;
+    margin-top: 0.5em;
     margin-bottom: 0em;
   }
   
   h2 {
     font-size: 1.8rem;
-    margin-top: 0em;
+    margin-top: 0.5em;
     margin-bottom: 0em;
   }
   
   h3 {
     font-size: 1.5rem;
-    margin-top: 0em;
+    margin-top: 0.5em;
     margin-bottom: 0em;
   }
   
   h4 {
     font-size: 1.44rem;
+    margin-top: 0.5em;
+    margin-bottom: 0em;
   }
   
   h5 {
     font-size: 1.15rem;
+    margin-top: 0.5em;
+    margin-bottom: 0em;
   }
   
   h6 {
     font-size: 0.96rem;
+    margin-top: 0.5em;
+    margin-bottom: 0em;
   }
