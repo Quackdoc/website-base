@@ -157,11 +157,35 @@ Thanks to being rust, this also means you can easily use jxl-oxide crate in your
 
 Of course, one should keep in mind that jxl-dec binary does have some limitations, jxl-dec It only supports PNG and npy output. You don't seem to be able to specify output colorspace either at the moment. 
 
-But how does it preform on that crappy laptop from before? Well here are the results from the mona image!
+But how does it preform on that crappy laptop from before? Well not great, Jxl-oxide works fine on newer systems, but when you load it on this crapy laptop...
 
 ```
-this should be something here
+130 root@archiso ~ # hyperfine --runs 2 './jxl-dec mona.jxl'
+Benchmark 1: ./jxl-dec mona.jxl
+  Time (mean ± σ):     168.351 s ±  0.236 s    [User: 280.878 s, System: 3.043 s]
+  Range (min … max):   168.185 s … 168.518 s    2 runs
+
+hyperfine --runs 2 './jxl-dec mona.jxl'  563.19s user 7.00s system 168% cpu 5:37.72 total
 ```
+
+The results speak for themselves That ram limitation hits hard Keep in mind that this image is `5221x2847`. Make no mistake however, JXL-oxide is still a competent decoder for any somewhat modern machine that has remotely close to a reasonable amount of ram. 
+
+```
+hyperfine --runs 10 'djxl mona.jxl --disable_output' './target/release/jxl-dec mona.jxl'
+Benchmark 1: djxl mona.jxl --disable_output
+  Time (mean ± σ):     200.3 ms ±  28.0 ms    [User: 1348.1 ms, System: 364.4 ms]
+  Range (min … max):   175.0 ms … 259.3 ms    10 runs
+
+Benchmark 2: ./target/release/jxl-dec mona.jxl
+  Time (mean ± σ):     561.8 ms ±  23.2 ms    [User: 1954.7 ms, System: 795.2 ms]
+  Range (min … max):   515.5 ms … 592.4 ms    10 runs
+
+Summary
+  djxl mona.jxl --disable_output ran
+    2.80 ± 0.41 times faster than ./target/release/jxl-dec mona.jxl
+```
+
+This was tested on a arch WSL2 instance. While yes, jxl-oxide is slower, it's certainly no slouch either. It is still well within reasonable speeds. 
 
 ## A great colour space, Easy decoder, Amazing flexibility and speed to boot! What am I loosing here chief?
 
