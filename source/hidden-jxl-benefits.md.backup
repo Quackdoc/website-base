@@ -88,7 +88,9 @@ Memory: 215MiB / 977MiB
 ```
 
 Now, lets see how fast libjxl can be.
-The first test is a 4k JXL image encoded from a JPEG image using `cjxl -d 0 -e 7 --lossless_jpeg=0`  the image will be below the results.
+The first test is a 4k JXL image encoded from a JPEG image using `cjxl -d 0 -e 7 --lossless_jpeg=0`
+
+if you have a JXL enabled browser, the images will embed for you! If not, the links will be at the bottom of this section
 
 ```
 root@archiso ~ # hyperfine --runs 5 'djxl ina4k-nore.jxl --disable_output'
@@ -98,9 +100,9 @@ Benchmark 1: djxl ina4k-nore.jxl --disable_output
 
 hyperfine --runs 5 'djxl ina4k-nore.jxl --disable_output'  192.25s user 3.80s system 195% cpu 1:40.10 total
 ```
-![Ina is a comfy streamer](https://files.catbox.moe/5obp2y.jxl)  
+![Ina is a comfy streamer, A shame you can't see this image.](https://files.catbox.moe/5obp2y.jxl)  
 
-For this next image, This is "The Woag". It is an 8k image lossless encode using `cjxl -e 7 -d 0` with Jpeg reconstruction.
+For this next image, This is "The Woag". It is an 8k image lossless encode using `cjxl -e 7 -d 0` with Jpeg reconstruction. This image might even slow down a desktop browser!
 
 ```  
 root@archiso ~ # hyperfine --runs 5 'djxl thewoag.jxl --disable_output'
@@ -110,7 +112,7 @@ Benchmark 1: djxl thewoag.jxl --disable_output
   
 hyperfine --runs 5 'djxl thewoag.jxl --disable_output'  78.02s user 8.58s system 190% cpu 45.428 total
 ```
-![the woag is pretty big!](https://files.catbox.moe/fsmdyy.jxl)
+![the woag is pretty big! This might be slowing down JXL enabled browsers though.](https://files.catbox.moe/fsmdyy.jxl)
 
 And finally we have an image encoded with `cjxl -e 7 -d 1` from a PNG source.
 ```
@@ -122,9 +124,15 @@ Benchmark 1: djxl mona.jxl --disable_output
 hyperfine --runs 5 'djxl mona.jxl --disable_output'  53.07s user 5.03s system 188% cpu 30.790 total
 ```
 
-![mona](https://files.catbox.moe/6o1t4r.jxl)
+![I may have a small addiction to genshin, The game is great and so is the art you are missing!](https://files.catbox.moe/6o1t4r.jxl)
 
 As you can see, Even on a really old 1GB dual core atom, JXL is surprisingly fast. I wouldn't recommend browsing a JXL enabled page. But I also wouldn't reccomend using one of these machines in the first place. It is also worth noting that this is an Arch linux Live boot, not a full install.
+
+Ina: https://files.catbox.moe/5obp2y.jxl
+
+Thewoag: https://files.catbox.moe/fsmdyy.jxl
+
+Mona: https://files.catbox.moe/6o1t4r.jxl
 
 ## OK, JXL is kinda cool. I would use it but man, C++ sucks. 
 
@@ -148,6 +156,8 @@ That's right, with a simple cargo build command line, we can make a 3.4M binary,
 Thanks to being rust, this also means you can easily use jxl-oxide crate in your projects, one could also probably build jxl-oxide as a library and use it in other languages too. Though I'm not sure if anyone has done it. There is a [wasm demo](https://gitlab.com/nitroxis/jxl-wasm) too for people who would want to use it targeting that.
 
 Of course, one should keep in mind that jxl-dec binary does have some limitations, jxl-dec It only supports PNG and npy output. You don't seem to be able to specify output colorspace either at the moment. 
+
+But how does it preform on that crappy laptop from before? Well here are the results from the mion!
 
 ## A great colour space, Easy decoder, Amazing flexibility and speed to boot! What am I loosing here chief?
 
