@@ -42,7 +42,7 @@ Why does this matter? Well it turns out, that because sRGB is a relative based t
 
 Well even pretending we live in a perfect world how do we actually do the tone mapping to make the two systems work together. Lets talk about rendering SDR on HDR for a second. This is commonly known as "Inverse Tone mapping." And this is actually a bit easier to do since we are "expanding" the image instead of "compressing" the image
 
-While "SDR" images can be roughly mapped to `1:203` where `1:` represents the peak brightness of the sRGB image, and `:203` the absolute brightness it will be displayed at. This kind of "dumb" mapping doesn't always look good sadly. But on the other hand, imagine scenario where we do no tone mapping instead, the white image you look at on a normal screen, would be dumping an 10000nit on a theoretical perfect PQ display. To put into context how bright this is. This is about as bright as a high quality office florescent light bulb. Of course, Something that resonates a bit more with would be this scenario. You have one of the new HDR ipads. Open an HDR white image, max out the brightness, go into a room and make it completely dark. This can be harsh enough that people have reported headaches from looking at it too long, and sudden exposure can actually cause small amounts of pain. These devices are about 1000 nits of output.
+While SDR images can be roughly mapped to `1:203` where `1:` represents the peak brightness of the sRGB image, and `:203` the absolute brightness it will be displayed at. This kind of "dumb" mapping doesn't always look good sadly. But on the other hand, imagine scenario where we do no tone mapping instead, the white image you look at on a normal screen, would be dumping an 10000nit on a theoretical perfect PQ display. To put into context how bright this is. This is about as bright as a high quality office florescent light bulb. Of course, Something that resonates a bit more with would be this scenario. You have one of the new HDR ipads. Open an HDR white image, max out the brightness, go into a room and make it completely dark. This can be harsh enough that people have reported headaches from looking at it too long, and sudden exposure can actually cause small amounts of pain. These devices are about 1000 nits of output.
 
 And this is the *easy* form of tone mapping, HDR to SDR is **significantly** harder to do. We are now compressing the possible brightness differences, but also the maximum brightness of the image needs to be brought down significantly. Being able to reconcile the two issues isn't too hard when we are doing it by hand. We however, aren't doing it by hand, we need a one size fits all glove. This is actually very much non trivial, There are ways to do it, but they do come with a degree of difficulty and performance hit. 
 
@@ -106,11 +106,19 @@ So, how fast *is* jxl?
 
 * 30fps? Beginner driver or elderly driver? can't tell.
 * 60fps? Maybe you can enter turtle races. (Lossless JXL can be found here. Magically faster then PNG sequences for me somehow... I think Libjxl devs sold their souls to the devil.)
-* 90fps+ Ah, here you are JXL!
+* 90fps? We are barely scratiching usable
+* 150fps? At least we are getting somewhere.
+* 200+fps. Now this is where we want to be.
 
 Yeah, that's pretty fast, "But Quack! CineForm is much faster then that! And ProRes is even faster!!!" Okay yeah that is true. I lost on this battle, but they are also about 2x the size for similar quality. If you run out of SSD space for your mezzanines, it has happened to me twice, and I swear it will not again. (I said this the first time too.) You will learn the true meaning of slow. 
 
-I'm not lying either, this was taken from march of this year (2023) 98FPS with `mpv` under Wayland using Vulkan + mailbox. I was getting from 90-120FPS when I was trying this! ![marine-unison](https://cdn.discordapp.com/attachments/549650852839686153/1087020829969227926/image.png)
+I'm not lying either, this was taken from December of year 2023 200+FPS with `mpv` under Wayland using Vulkan + mailbox. ![marine-unison](https://media.discordapp.net/attachments/673202643916816384/1182221278430634014/image.png)
+
+And it scales across multiple videos pretty decently too. ![many marine](https://media.discordapp.net/attachments/673202643916816384/1182221277776314398/image.png)
+
+I made this video by encoding the video to png, then I used the following commandline to encode the PNG to JXL, I then muxed that JXL sequence into an mkv and played it back using `mpv` the command is as follows. `cjxl -e 3 -d 1 --faster_decoding=4`
+
+So how useful is this for a mezzanine? 200fps is just about scratching the surface as usable. I wouldn't use it in any complicated workflows, however if you are only working with 2 or 3 simultanious video clips at a time, Then JXL could very well be useful here. Im pretty excited to see how far JXL will come in this area.
 
 "OK quack, That's cool and all, but not everyone has a good PC, and I don't really care about a video, I just want to make sure my old craptop will load them fast enough. What about Mr. Low end? No no, Not you old laptop low? I mean **low** end"
 
@@ -183,13 +191,15 @@ Thewoag: https://files.catbox.moe/fsmdyy.jxl
 
 Mona: https://files.catbox.moe/6o1t4r.jxl
 
-## Can you tell me how consistent existing JXL encoders are? You mentioned it before.
+## Can you tell me how consistent the main JXL encoder is? You mentioned it before.
 
-Yeah sure. So there are two methods we can use for encoding the image sequence, the easy method for this would be to use FFmpeg for this. While this is a valid method, I want to use a bit of a slower effort, and FFmpeg isn't great at parallelizing this. Instead, I will use FFmpeg to decode the image sequence into a series of PNG images. I am mainly doing this because it's fast enough, and using different formats makes this just a wee bit easier on me. The encode I will run is `ffmpeg -i video.mp4 -c:v png img-seq\frame-%04d.png`
+I will be using the same video as when I showcased the speed of jxl inside of MPV. but I will go into a bit more depth on how to compare here. I used different settings here because I wanted to optimize more for ssimu2 then filesize, however the decode speed is the same.
 
-The next step is to encode each frame into JXL, for this Linux users can use `parallel -j NUM cjxl -d 0.5 -e 6 {} {.}.jxl` where NUM is the number of parallel threads. On windows you can use powershell like so `ForEach -Parallel`, or you can use a tool like `rust-parallel` which is a windows compatible parallel command execution tool similar to parallel. To use rust-parallel you can use `ls.exe | rust-parallel -p -j 4 -r '(.*).(png)' cjxl -e 6 -d 0.5 {0} {1}.jxl`
+So there are two methods we can use for encoding the image sequence, the easy method for this would be to use FFmpeg for this. While this is a valid method, I want to use a bit of a slower effort, and FFmpeg isn't great at parallelizing this. Instead, I will use FFmpeg to decode the image sequence into a series of PNG images. I am mainly doing this because it's fast enough, and using different formats makes this just a wee bit easier on me. The encode I will run is `ffmpeg -i video.mp4 -c:v png img-seq\frame-%04d.png`
 
-It's easier to move the JXL and PNG images into their own folders so do that now. I will then decode the JXL images back to png, because the tool I will be using is `ssimulacra2rs` and it uses vapoursynth for input. This makes it great for doing per frame testing, however the most of the common input tools on windows don't support JXL yet, if you are on linux. you may be able to skip this step as the tools may support JXL. On windows I can use `ls.exe | rust-parallel -p -j 4 -r '(.*).(jxl)' djxl {0} {1}.png` to convert the frames back to PNG.
+The next step is to encode each frame into JXL, for this Linux users can use `parallel -j NUM cjxl -e 6 -d 0.5 --faster_decoding=4 {} {.}.jxl` where NUM is the number of parallel threads. On windows you can use powershell like so `ForEach -Parallel`, or you can use a tool like `rust-parallel` which is a windows compatible parallel command execution tool similar to parallel. To use rust-parallel you can use `ls.exe | rust-parallel.exe -p -j 4 -r '(.*).(png)' cjxl.exe -e 6 -d 0.5 --faster_decoding=4 {0} {1}.jxl`
+
+It's easier to move the JXL and PNG images into their own folders so do that now. I will then decode the JXL images back to png, because the tool I will be using is `ssimulacra2rs` and it uses vapoursynth for input. This makes it great for doing per frame testing, however the most of the common input tools on windows don't support JXL yet, if you are on linux. you may be able to skip this step as the tools may support JXL. On windows I can use `ls.exe | rust-parallel.exe -p -j 4 -r '(.*).(jxl)' djxl.exe {0} {1}.png` to convert the frames back to PNG.
 
 My main folder now has two sub folders. `jxl/frame-%04d.png` and `png/frame-%04d.png` where the png folder is the source, and the jxl folder is the encoded ones.
 
@@ -205,13 +215,15 @@ clip.set_output(0)
 
 Finally execute this command to run the comparison program. `ssimulacra2_rs.exe video -f NUM_THREADS -g png.vpy jxl.vpy`. `ssimulacra2rs` is quite slow, however it is quite an accurate method of comparing images/videos to one another. As we can with the graph below, JXL manages to exceed 90 ssimu2 with ease.
 
-![The output graph for JXL](https://files.catbox.moe/lzn4uv.png)
+![The output graph for JXL](https://files.catbox.moe/8m6glg.png)
 
 How does this compare with prores? Good question using prores hq, these were the scores I got.
 
-![Prores is not as stable, but more then good enough still!](https://files.catbox.moe/gm7dhn.png)
+![Prores](https://files.catbox.moe/1zxjul.png)
 
-Prores is less consistent but most frames scored better. However anything past a 90 is usually good enough for a mezannine. But how does file size compare? JXL: `58.99 MiB` Prores: `237.70 MiB` As we can see, JXL is less then half the size! We could probably use some of that savings to bump the quality some, but for me it simply isn't necessary.
+Prores had a better average, but it's lows were worse then JXLs. However since anything close to and past a 90 is usually good enough for a mezannine I would consider both good here. But how does file size compare? JXL: `1.26 GiB` Prores: `4.15 GiB` As we can see, JXL is less then half the size! We could probably use some of that savings to bump the quality some, but for me it simply isn't necessary.
+
+It could be nice to allot some more savings to faster decode, however at the current time, libjxl's fast decode isn't quite there yet, so increasing it further doesn't actually change anything, the image is the same size, and the decode speed is the same as well.
 
 ## OK, JXL is kinda cool. I would use it but man, C++ sucks.
 I hear you loud and clear. If it was any louder I might go deaf. I know the pain, and I myself am not the biggest fan either. However [have no fear, Rust is here!](https://github.com/tirr-c/jxl-oxide) Well for decoding at least. But still! jxl-oxide is a third party, native rust decoder, and it is pretty fast. The important part of jxl-oxide however, Is not the MIT license, It's not that rust is the best programming language ever. It's this, 
@@ -297,6 +309,11 @@ In this article I took some liberties with the terminology and explanations to k
 
 [A PDF](https://graphics.stanford.edu/courses/cs148-10-summer/docs/2010--kerr--cie_xyz.pdf) about the history and some technical aspects of the XYZ and xyY colorspaces. A significant colorspace when it comes to detailing how human vision works and conversions between formats.
 
+#### Speed
+
+It likely is possible to gain more decode speed with libjxl by tinkering with the encode settings. However these are things I don't expect anyone to muck about with themselves. Even the test I modified will need someone to put some effort in to prepare their pipeline, as FFmpeg does not currently, at the time of writing this, decode JXL videos when muxed into MKV or Nut files without a patch. However this may change at somepoint. 
+
 #### Rust vs C++
 
 Ok, No I don't actually *hate* C++, However some developers of various projects have complained about pulling libjxl into their build chain before and it not playing nice. For some projects, jxl-oxide might indeed be significantly easier to pull into their build chain, but as it stands, I don't believe jxl-oxide can actively be built as a library and directly integrated with other languages.
+
