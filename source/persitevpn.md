@@ -6,6 +6,10 @@ category = "Tutorial"
 url_name = "persitevpn"
 ---
 
+# NOTE: THIS IS UNSAFE
+
+It turns out that sometimes when firefox boots the multi account containers will not load up. If this happens and you use a website you don't want to be used over your normal network **THIS WILL COMPROMISE YOU** The websites will load through your normal network. You have been warned.
+
 # Per-site VPN using firefox and wireguard (or other VPNs)
 The basic Idea of this is pretty simple, Firefox has an offical addon called Multi-Account containers. This allows you to create and use pseudo profiles. These profiles allow you to isolate cookies, And use mozilla VPN. But "wait" you say, "Mozilla VPN sucks!" I agree! thankfully Mozilla may not allow us to use wireguard VPNs from within firefox let alone the extension, Socks5 proxies are supported.
 
