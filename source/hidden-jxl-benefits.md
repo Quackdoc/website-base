@@ -22,6 +22,11 @@ These are the main parts of this post. You can get an idea of what is covered in
 5. OK, JXL is kinda cool. I would use it but man, C++ sucks.
 6. Notes. (Read this)
 
+#### Edit History
+Major edits and corrections are at the top of the page for transparency. They will not be made to the article itself unless it is a minor edit. Everything you see here takes presidence over both the article itself and the notes section.
+
+1. We now have a [JXL image gallery]( https://github.com/oupson/Jxl-Gallery/releases/latest) for android. This is not a simple JXL viewer like before, but a fork of fossify gallery with JXL support. A proper full blown gallery app. This is quite important since now it is viable to store all of your phone images in JXL format.
+
 ## XYB, more then just compression. Are weird colors a problem of the past?
 
 Colorspaces are complicated things, they are a product of trying to squeeze the absolute best they can out of the hardware they are designed for, They have historically had severe limits, but first, a quick primer as to why they are needed.
@@ -152,11 +157,17 @@ Yeah, that's pretty fast, "But Quack! CineForm is much faster then that! And Pro
 
 I'm not lying either, this was taken from December of year 2023 200+FPS with `mpv` under Wayland using Vulkan + mailbox using a Linux desktop with sway compositor.
 
-![marine-unison](https://media.discordapp.net/attachments/673202643916816384/1182221278430634014/image.png)
+![marine-unison image here](https://media.discordapp.net/attachments/673202643916816384/1182221278430634014/image.png)
 
-And it scales across multiple videos pretty decently too. ![many marine](https://media.discordapp.net/attachments/673202643916816384/1182221277776314398/image.png)
+![many marine image here](https://media.discordapp.net/attachments/673202643916816384/1182221277776314398/image.png)
 
 I made this video by encoding the video to png, then I used the following commandline to encode the PNG to JXL, I then muxed that JXL sequence into an mkv and played it back using `mpv` the command is as follows. `cjxl -e 3 -d 1 --faster_decoding=4`
+
+When encoding without the `faster_decoding` flag we get roughly half the speed as we do with it.
+
+![Slower marine-unison image here](https://cdn.discordapp.com/attachments/673202643916816384/1182221413856313384/image.png)
+
+![many marine-unison slow image here](https://cdn.discordapp.com/attachments/673202643916816384/1182221413357195276/image.png) 
 
 So how useful is this for a mezzanine? 200fps is just about scratching the surface as usable. I wouldn't use it in any complicated workflows, however if you are only working with 2 or 3 simultanious video clips at a time, Then JXL could very well be useful here. Im pretty excited to see how far JXL will go in this area. Faster CPUs will mean faster decode times, and I am sure that the `faster_decoding` flag could likely be optimized too. We may also see potential optimizations when it comes to libjxl's decoder, or potentially alternative, faster decoders.
 
