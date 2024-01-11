@@ -118,8 +118,10 @@ Download your wireguard config. No need for modifications to this one. then run 
 connection import type wireguard file wireguard-swiss.conf
 nmcli con modify wireguard-swiss  ipv4.dns-priority 9999
 nmcli con modify wireguard-swiss ipv4.route-metric 9999
+nmcli con modify wireguard-swiss ipv4.never-default yes
 nmcli con modify wireguard-swiss  ipv6.dns-priority 9999
 nmcli con modify wireguard-swiss ipv6.route-metric 9999
+nmcli con modify wireguard-swiss ipv6.never-default yes
 nmcli con modify wireguard-swiss connection.autoconnect yes
 ```
 
