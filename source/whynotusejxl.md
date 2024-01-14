@@ -3,7 +3,7 @@ title = "Why aren't we using JXL?"
 datetime = 2024-01-14T14:58:08Z
 tags = ["Images"]
 category = "Tech Showcase"
-url_name = "jxlkindacool"
+url_name = "whynotusejxl"
 ---
 # Why aren't we using JXL?
 
